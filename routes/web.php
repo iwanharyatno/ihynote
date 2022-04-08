@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
@@ -24,8 +26,22 @@ Route::get('/', function () {
 Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'process']);
 
+Route::get('/email-verification', function() {
+    return view('verification-notice');
+})->middleware('auth')->name('verification.notice');
+Route::get('/email-verification/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::post('/email-verification', function(Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Tautan verifikasi dikirim!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 ROute::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
 Route::post('/login', [LoginController::class, 'process']);
 
-Route::get('/notes', [NotesController::class, 'index'])->middleware('auth');
+Route::get('/notes', [NotesController::class, 'index'])->middleware(['auth', 'verified']);
