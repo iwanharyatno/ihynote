@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('folder_id');
             $table->string('title');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->mediumText('content');
             $table->timestamps();
         });
