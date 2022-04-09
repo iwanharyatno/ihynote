@@ -21,7 +21,7 @@ use App\Http\Controllers\NotesController;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('auth');
+});
 
 Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'process']);
@@ -42,7 +42,11 @@ Route::post('/email-verification', function(Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
-ROute::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
 Route::post('/login', [LoginController::class, 'process']);
 
-Route::get('/notes', [NotesController::class, 'index'])->middleware('auth');
+Route::middleware('auth')->group(function() {
+	Route::get('/notes', [NotesController::class, 'redirector']);
+	Route::get('/notes/{folder_id}', [NotesController::class, 'index']);
+	Route::post('/notes/new/{type}', [NotesController::class, 'newNode']);
+	ROute::get('/logout', [LoginController::class, 'logout']);
+});

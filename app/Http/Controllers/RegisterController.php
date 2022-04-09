@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use App\Models\User;
+use App\Models\Folder;
 
 class RegisterController extends Controller
 {
@@ -30,8 +32,14 @@ class RegisterController extends Controller
             'password' => bcrypt($userPassword)
         ]);
 
+        $folder = Folder::create([
+            'user_id' => $user->id,
+            'name' => $user->id . '-root',
+            'description' => $user->id . '-root-folder'
+        ]);
+
         Auth::login($user);
 
-        return redirect('/notes');
+        return redirect('/notes/' . $folder->id);
     }
 }

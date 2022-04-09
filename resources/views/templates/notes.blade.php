@@ -7,6 +7,26 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
 </head>
 <body>
+   <!-- Modal -->
+	<div class="modal fade" id="node-modal" data-bs-backdrop="static" data-bs-keyboard="false">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="staticBackdropLabel">Buat baru</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+                <form action="/notes/new/note" method="post">
+		            <div class="modal-body">
+	                    @csrf
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+		                <button type="submit" class="btn btn-primary">Simpan</button>
+		            </div>
+                </form>
+	        </div>
+	    </div>
+	</div> 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#">{{ $user->name }}</a>
@@ -15,6 +35,15 @@
 			</button>
 			<div class="collapse navbar-collapse ms-auto" id="navbarNav">
 				<ul class="navbar-nav">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						    Buat Baru
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#node-modal" data-bs-type="note">Catatan</button></li>
+							<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#node-modal">Folder</button></li>
+						</ul>
+					</li>
 					<li class="nav-item">
 					    <a class="nav-link" href="/logout">Logout</a>
 					</li>
@@ -24,5 +53,50 @@
 	</nav>
     @yield('content')
     <script src="{{ asset('js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <script>
+        const nodeModal = document.getElementById('node-modal');
+        nodeModal.addEventListener('show.bs.modal', function(evt) {
+            const triggerer = evt.relatedTarget;
+            const type = triggerer.getAttribute('data-bs-type');
+            
+            const modalTitle = nodeModal.querySelector('.modal-title');
+            const modalBody = nodeModal.querySelector('.modal-body');
+            const form = nodeModal.querySelector('form');
+
+            if (type === 'note') {
+                modalTitle.textContent = 'Buat Catatan Baru';
+                form.action = '/notes/new/note';
+                modalBody.innerHTML = `
+                    @csrf
+                    <input type="hidden" name="folder_id" value="{{ $currentFolder->id }}">
+                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Judul Catatan</label>
+                        <input type="text" class="form-control" id="title" name="title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Deskripsi</label>
+                        <textarea id="description" class="form-control" name="description"></textarea>
+                    </div>
+                `;
+            } else {
+                modalTitle.textContent = 'Buat Folder Baru';
+                form.action = '/notes/new/folder';
+                modalBody.innerHTML = `
+                    @csrf
+                    <input type="hidden" name="folder_id" value="{{ $currentFolder->id }}">
+                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nama Folder</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Deskripsi</label>
+                        <textarea id="description" class="form-control" name="description"></textarea>
+                    </div>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>

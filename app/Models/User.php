@@ -41,4 +41,12 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function folders() {
+        return $this->hasMany(Folder::class);
+    }
+
+    public function notes() {
+        return $this->hasMany(Note::class);
+    }
 }
