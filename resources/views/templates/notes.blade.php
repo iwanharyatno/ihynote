@@ -41,7 +41,7 @@
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#node-modal" data-bs-type="note">Catatan</button></li>
-							<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#node-modal">Folder</button></li>
+							<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#node-modal" data-bs-type="folder">Folder</button></li>
 						</ul>
 					</li>
 					<li class="nav-item">
@@ -63,38 +63,81 @@
             const modalBody = nodeModal.querySelector('.modal-body');
             const form = nodeModal.querySelector('form');
 
-            if (type === 'note') {
-                modalTitle.textContent = 'Buat Catatan Baru';
-                form.action = '/notes/new/note';
-                modalBody.innerHTML = `
-                    @csrf
-                    <input type="hidden" name="folder_id" value="{{ $currentFolder->id }}">
-                    <input type="hidden" name="user_id" value="{{ $user->id }}">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Judul Catatan</label>
-                        <input type="text" class="form-control" id="title" name="title">
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Deskripsi</label>
-                        <textarea id="description" class="form-control" name="description"></textarea>
-                    </div>
-                `;
-            } else {
-                modalTitle.textContent = 'Buat Folder Baru';
-                form.action = '/notes/new/folder';
-                modalBody.innerHTML = `
-                    @csrf
-                    <input type="hidden" name="folder_id" value="{{ $currentFolder->id }}">
-                    <input type="hidden" name="user_id" value="{{ $user->id }}">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nama Folder</label>
-                        <input type="text" class="form-control" id="name" name="name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Deskripsi</label>
-                        <textarea id="description" class="form-control" name="description"></textarea>
-                    </div>
-                `;
+            switch(type) {
+                case 'note':
+	                modalTitle.textContent = 'Buat Catatan Baru';
+	                form.action = '/notes/new/note';
+	                modalBody.innerHTML = `
+	                    @csrf
+	                    <input type="hidden" name="folder_id" value="{{ $currentFolder->id }}">
+	                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+	                    <div class="mb-3">
+	                        <label for="title" class="form-label">Judul Catatan</label>
+	                        <input type="text" class="form-control" id="title" name="title">
+	                    </div>
+	                    <div class="mb-3">
+	                        <label for="description" class="form-label">Deskripsi</label>
+	                        <textarea id="description" class="form-control" name="description"></textarea>
+	                    </div>
+	                `;
+                    break;
+                case 'folder':
+	                modalTitle.textContent = 'Buat Folder Baru';
+	                form.action = '/notes/new/folder';
+	                modalBody.innerHTML = `
+	                    @csrf
+	                    <input type="hidden" name="folder_id" value="{{ $currentFolder->id }}">
+	                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+	                    <div class="mb-3">
+	                        <label for="name" class="form-label">Nama Folder</label>
+	                        <input type="text" class="form-control" id="name" name="name">
+	                    </div>
+	                    <div class="mb-3">
+	                        <label for="description" class="form-label">Deskripsi</label>
+	                        <textarea id="description" class="form-control" name="description"></textarea>
+	                    </div>
+	                `;
+                    break;
+                case 'edit-folder':
+                    const folderFields = triggerer.getAttribute('data-fields').split('&');
+
+                    modalTitle.textContent = 'Edit Folder';
+                    form.action = '/notes/edit/folder';
+	                modalBody.innerHTML = `
+	                    @csrf
+	                    <input type="hidden" name="folder_id" value="{{ $currentFolder->id }}">
+	                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+	                    <input type="hidden" name="id" value="${ folderFields[0].split('=')[1] }">
+	                    <div class="mb-3">
+	                        <label for="name" class="form-label">Nama Folder</label>
+	                        <input type="text" class="form-control" id="name" name="name" value="${ folderFields[1].split('=')[1] }">
+	                    </div>
+	                    <div class="mb-3">
+	                        <label for="description" class="form-label">Deskripsi</label>
+	                        <textarea id="description" class="form-control" name="description">${ folderFields[2].split('=')[1] }</textarea>
+	                    </div>
+	                `;
+                    break;
+                case 'edit-note':
+                    const noteFields = triggerer.getAttribute('data-fields').split('&');
+
+                    modalTitle.textContent = 'Edit info Catatan';
+                    form.action = '/notes/edit/note';
+	                modalBody.innerHTML = `
+	                    @csrf
+	                    <input type="hidden" name="folder_id" value="{{ $currentFolder->id }}">
+	                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+	                    <input type="hidden" name="id" value="${ noteFields[0].split('=')[1] }">
+	                    <div class="mb-3">
+	                        <label for="title" class="form-label">Judul Catatan</label>
+	                        <input type="text" class="form-control" id="title" name="title" value="${ noteFields[1].split('=')[1] }">
+	                    </div>
+	                    <div class="mb-3">
+	                        <label for="description" class="form-label">Deskripsi</label>
+	                        <textarea id="description" class="form-control" name="description">${ noteFields[2].split('=')[1] }</textarea>
+	                    </div>
+	                `;
+                    break;
             }
         });
     </script>

@@ -48,5 +48,8 @@ Route::middleware('auth')->group(function() {
 	Route::get('/notes', [NotesController::class, 'redirector']);
 	Route::get('/notes/{folder_id}', [NotesController::class, 'index']);
 	Route::post('/notes/new/{type}', [NotesController::class, 'newNode']);
-	ROute::get('/logout', [LoginController::class, 'logout']);
+	Route::post('/notes/edit/{type}', [NotesController::class, 'editNode']);
+	Route::get('/notes/delete/{type}/{id}', [NotesController::class, 'deleteNode']);
+
+	Route::get('/logout', [LoginController::class, 'logout']);
 });

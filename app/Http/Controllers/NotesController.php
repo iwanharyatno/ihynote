@@ -53,4 +53,32 @@ class NotesController extends Controller
 
         return back();
     }
+
+    public function editNode(Request $request, $type) {
+        if ($type == 'note') {
+            $note = Note::find($request->input('id'));
+            $note->title = $request->input('title');
+            $note->description = $request->input('description');
+            $note->save();
+        } else {
+            $folder = Folder::find($request->input('id'));
+            $folder->name = $request->input('name');
+            $folder->description = $request->input('description');
+            $folder->save();
+        }
+
+        return back();
+    }
+
+    public function deleteNode($type, $id) {
+        if ($type == 'note') {
+            $note = Note::find($id);
+            $note->delete();
+        } else {
+            $folder = Folder::find($id);
+            $folder->deleteRecursive();
+        }
+
+        return back();
+    }
 }
