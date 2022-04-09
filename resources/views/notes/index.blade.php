@@ -14,7 +14,7 @@
 	                <h5 class="card-title"><a href="/notes/{{ $folder->id }}">{{ $folder->name }}</a></h5>
 	                <p class="card-text mb-4">{{ $folder->description }}</p>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#node-modal" data-bs-type="edit-folder" data-fields="id={{ $folder->id }}&name={{ $folder->name }}&description={{ $folder->description }}">Edit</button>
-                    <a class="btn btn-danger" href="/notes/delete/folder/{{ $folder->id }}" onclick="return confirm('Hapus folder {{ $folder->name }}? tindakan ini akan menghapus semua isi di dalamnya juga')">Hapus</a>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#alert-modal" data-bs-href="/notes/delete/folder/{{ $folder->id }}" data-bs-message="Hapus folder {{ $folder->name }}? tindakan ini akan menghapus semua isi di dalamnya juga">Hapus</a>
                 </div>
 	        </div>
 	    </div>
@@ -27,7 +27,7 @@
 	                <h5 class="card-title">{{ $note->title }}</h5>
 	                <p class="card-text mb-4">{{ $note->description }}</p>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#node-modal" data-bs-type="edit-note" data-fields="id={{ $note->id }}&title={{ $note->title }}&description={{ $note->description }}">Edit</button>
-                    <a class="btn btn-danger" href="/notes/delete/note/{{ $note->id }}" onclick="return confirm('Hapus catatan {{ $note->title }} selamanya?')">Hapus</a>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#alert-modal" data-bs-href="/notes/delete/note/{{ $note->id }}" data-bs-message="Hapus catatan {{ $note->title }} selamanya?">Hapus</a>
                 </div>
 	        </div>
 	    </div>

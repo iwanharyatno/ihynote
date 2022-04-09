@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
 </head>
 <body>
-   <!-- Modal -->
+    <!-- Modal -->
 	<div class="modal fade" id="node-modal" data-bs-backdrop="static" data-bs-keyboard="false">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
@@ -24,6 +24,22 @@
 		                <button type="submit" class="btn btn-primary">Simpan</button>
 		            </div>
                 </form>
+	        </div>
+	    </div>
+	</div> 
+	<div class="modal fade" id="alert-modal" data-bs-backdrop="static" data-bs-keyboard="false">
+	    <div class="modal-dialog modal-dialog-centered">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="staticBackdropLabel">Konfirmasi</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+		        <div class="modal-body">
+		        </div>
+		        <div class="modal-footer">
+		            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+		            <a class="btn btn-danger" href="javascript:void(0)">Hapus</a>
+		        </div>
 	        </div>
 	    </div>
 	</div> 
@@ -73,7 +89,7 @@
 	                    <input type="hidden" name="user_id" value="{{ $user->id }}">
 	                    <div class="mb-3">
 	                        <label for="title" class="form-label">Judul Catatan</label>
-	                        <input type="text" class="form-control" id="title" name="title">
+	                        <input type="text" class="form-control" id="title" name="title" required>
 	                    </div>
 	                    <div class="mb-3">
 	                        <label for="description" class="form-label">Deskripsi</label>
@@ -90,7 +106,7 @@
 	                    <input type="hidden" name="user_id" value="{{ $user->id }}">
 	                    <div class="mb-3">
 	                        <label for="name" class="form-label">Nama Folder</label>
-	                        <input type="text" class="form-control" id="name" name="name">
+	                        <input type="text" class="form-control" id="name" name="name" required>
 	                    </div>
 	                    <div class="mb-3">
 	                        <label for="description" class="form-label">Deskripsi</label>
@@ -140,6 +156,20 @@
                     break;
             }
         });
+
+        const alertModal = document.getElementById('alert-modal');
+        alertModal.addEventListener('show.bs.modal', function(evt) {
+            const triggerer = evt.relatedTarget;
+
+            const modalBody = alertModal.querySelector('.modal-body');
+            const okButton = alertModal.querySelector('a');
+
+            const message = triggerer.getAttribute('data-bs-message');
+            const urlHref = triggerer.getAttribute('data-bs-href');
+
+            modalBody.textContent = message;
+            okButton.href = urlHref;
+       });
     </script>
 </body>
 </html>
