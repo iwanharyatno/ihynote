@@ -27,6 +27,7 @@ Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'process']);
 
 Route::get('/email-verification', function() {
+    abort(403);
     return view('verification-notice');
 })->middleware('auth')->name('verification.notice');
 Route::get('/email-verification/{id}/{hash}', function (EmailVerificationRequest $request) {
@@ -44,4 +45,4 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 ROute::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
 Route::post('/login', [LoginController::class, 'process']);
 
-Route::get('/notes', [NotesController::class, 'index'])->middleware(['auth', 'verified']);
+Route::get('/notes', [NotesController::class, 'index'])->middleware('auth');
