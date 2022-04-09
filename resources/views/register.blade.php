@@ -34,7 +34,8 @@
                     <label for="password-confirm" class="form-label">Konfirmasi Password</label>
                     <input type="password" id="password-confirm" class="form-control" placeholder="Ketik ulang password yang sama" required>
                 </div>
-                <button type="submit" class="btn btn-primary mt-4">Daftar</button>
+                <button type="submit" class="btn btn-primary my-2 w-100">Daftar</button>
+                <p class="form-text mt-2">Sudah punya akun? <a href="/login">Masuk!</a></p>
             </form>
         </div>
     </div>
