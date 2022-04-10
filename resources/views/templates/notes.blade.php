@@ -51,6 +51,9 @@
 			</button>
 			<div class="collapse navbar-collapse ms-auto" id="navbarNav">
 				<ul class="navbar-nav">
+					<li class="nav-item">
+					    <a class="nav-link" href="/notes">Catatan Saya</a>
+					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						    Buat Baru

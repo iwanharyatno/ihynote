@@ -18,12 +18,14 @@ class NotesController extends Controller
         return redirect('/notes/' . $userFolder->id);
     }
 
-    public function index($folder_id) {
+    public function index(Request $request, $folder_id) {
         $user = Auth::user();
 
         $currentFolder = Folder::find($folder_id);
         $folders = $currentFolder->folders;
         $notes = $currentFolder->notes;
+
+        session(['parent_dir' => '/' . $request->path()]);
 
         return view('notes.index', [
             'user' => $user,
@@ -84,9 +86,11 @@ class NotesController extends Controller
 
     public function editNote($note_id) {
         $note = Note::find($note_id);
+        $parent = session('parent_dir');
 
         return view('notes.edit', [
             'note' => $note,
+            'parent' => $parent
         ]);
     }
 
