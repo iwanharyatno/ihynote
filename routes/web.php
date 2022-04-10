@@ -49,6 +49,8 @@ Route::middleware('auth')->group(function() {
 	Route::get('/notes/{folder_id}', [NotesController::class, 'index']);
 	Route::post('/notes/new/{type}', [NotesController::class, 'newNode']);
 	Route::post('/notes/edit/{type}', [NotesController::class, 'editNode']);
+	Route::post('/notes/edit/{note_id}/save', [NotesController::class, 'editNoteSave']);
+	Route::get('/notes/edit/{note_id}', [NotesController::class, 'editNote']);
 	Route::get('/notes/delete/{type}/{id}', [NotesController::class, 'deleteNode']);
 
 	Route::get('/logout', [LoginController::class, 'logout']);

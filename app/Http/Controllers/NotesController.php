@@ -81,4 +81,23 @@ class NotesController extends Controller
 
         return back();
     }
+
+    public function editNote($note_id) {
+        $note = Note::find($note_id);
+
+        return view('notes.edit', [
+            'note' => $note,
+        ]);
+    }
+
+    public function editNoteSave(Request $request, $note_id) {
+        $note = Note::find($note_id);
+
+        $note->title = $request->input('title');
+        $note->content = $request->input('content') ?: '';
+
+        $note->save();
+
+        return back();
+    }
 }

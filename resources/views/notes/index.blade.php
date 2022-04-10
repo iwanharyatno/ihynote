@@ -24,7 +24,7 @@
 	    <div class="col-md-5">
 	        <div class="card my-2">
                 <div class="card-body">
-	                <h5 class="card-title">{{ $note->title }}</h5>
+	                <h5 class="card-title"><a href="/notes/edit/{{ $note->id }}">{{ $note->title }}</a></h5>
 	                <p class="card-text mb-4">{{ $note->description }}</p>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#node-modal" data-bs-type="edit-note" data-fields="id={{ $note->id }}&title={{ $note->title }}&description={{ $note->description }}">Edit</button>
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#alert-modal" data-bs-href="/notes/delete/note/{{ $note->id }}" data-bs-message="Hapus catatan {{ $note->title }} selamanya?">Hapus</a>
