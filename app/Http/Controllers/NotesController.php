@@ -98,6 +98,6 @@ class NotesController extends Controller
 
         $note->save();
 
-        return back();
+        return back()->with('message', 'Perubahan berhasil disimpan!');
     }
 }

@@ -17,6 +17,12 @@
 </head>
 <body>
     <div class="container mt-4">
+	    @if (\Session::has('message'))
+	       <div class="alert alert-success alert-dismissible fade show" role="alert">
+	           {!! \Session::get('message') !!}
+	           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	       </div>
+	    @endif
         <form action="/notes/edit/{{ $note->id }}/save" method="POST">
 	        @csrf
 	        <div class="row justify-content-between mb-3">
@@ -32,5 +38,6 @@
 	        </div>
         </form>
     </div>
+    <script src="{{ asset('js/bootstrap/bootstrap.bundle.min.js') }}"></script>
 </body>
 </html>
