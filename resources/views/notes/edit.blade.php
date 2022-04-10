@@ -9,9 +9,7 @@
     <script>
         tinymce.init({
             selector: 'textarea#note-editor',
-            mobile: {
-                menubar: true
-            }
+            menubar: false
         });
     </script>
 </head>
