@@ -102,6 +102,6 @@ class NotesController extends Controller
 
         $note->save();
 
-        return back()->with('message', 'Perubahan berhasil disimpan!');
+        return "OK";
     }
 }
