@@ -18,19 +18,19 @@
 	    <div id="alert-container"></div>
         <form action="/notes/edit/{{ $note->id }}/save" method="POST">
 	        <div class="row justify-content-between align-items-center mb-3 px-2">
-                <div class="col-1 p-0">
+                <div class="col-1 p-0 text-center">
                     <a href="{{ $parent }}">
-                        <svg viewBox="0, 0, 50, 50">
+                        <svg viewBox="0, 0, 50, 50" width="2rem">
 							<line x1="10" y1="25" x2="25" y2="40" stroke-width="4" stroke="#909090"/>
 							<line x1="10" y1="25" x2="25" y2="10" stroke-width="4" stroke="#909090"/>
 							<line x1="8.75" y1="25" x2="40" y2="25" stroke-width="4" stroke="#909090"/>
 						</svg>
                     </a>
                 </div>
-	            <div class="col-8">
-	                <input id="title" class="form-control" type="text" name="title" value="{{ $note->title }}">
+	            <div class="col-8 p-0 text-center">
+	                <input id="title" class="form-control w-100" type="text" name="title" value="{{ $note->title }}">
 	            </div>
-	            <div class="col-3">
+	            <div class="col-3 ps-2">
                     <button type="submit" class="btn btn-primary">Simpan</button>
 	            </div>
 	        </div>
