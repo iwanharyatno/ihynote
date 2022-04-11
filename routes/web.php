@@ -1,8 +1,7 @@
 <?php
 
+use App\Http\Controllers\EmailVerificationController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
 
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
@@ -26,25 +25,14 @@ Route::get('/', function () {
 Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'process']);
 
-Route::get('/email-verification', function() {
-    abort(403);
-    return view('verification-notice');
-})->middleware('auth')->name('verification.notice');
-Route::get('/email-verification/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-
-    return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-Route::post('/email-verification', function(Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('message', 'Tautan verifikasi dikirim!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::get('/email-verification', [EmailVerificationController::class, 'notice'])->middleware('auth')->name('verification.notice');
+Route::get('/email-verification/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware(['auth', 'signed'])->name('verification.verify');
+Route::post('/email-verification', [EmailVerificationController::class, 'resend'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'process']);
 
-Route::middleware('auth')->group(function() {
+Route::middleware(['auth', 'verified'])->group(function() {
 	Route::get('/notes', [NotesController::class, 'redirector']);
 	Route::get('/notes/{folder_id}', [NotesController::class, 'index']);
 	Route::post('/notes/new/{type}', [NotesController::class, 'newNode']);

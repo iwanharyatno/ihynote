@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 
 use App\Models\User;
 use App\Models\Folder;
@@ -39,6 +40,8 @@ class RegisterController extends Controller
         ]);
 
         Auth::login($user);
+
+        event(new Registered($user));
 
         return redirect('/notes/' . $folder->id);
     }
