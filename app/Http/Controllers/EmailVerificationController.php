@@ -13,7 +13,9 @@ class EmailVerificationController extends Controller
         if ($user->hasVerifiedEmail()) {
             return redirect('/notes');
         }
-        return view('verification-notice');
+        return view('verification-notice', [
+            'user' => $user
+        ]);
     }
 
     public function verify(EmailVerificationRequest $request) {
@@ -25,6 +27,16 @@ class EmailVerificationController extends Controller
     public function resend(Request $request) {
 	    $request->user()->sendEmailVerificationNotification();
 	
+	    return back()->with('message', 'Tautan verifikasi dikirim!');
+    }
+
+    public function changeEmail(Request $request) {
+        $user = $request->user();
+        $user->email = $request->input('email');
+        $user->save();
+
+        $user->sendEmailVerificationNotification();
+
 	    return back()->with('message', 'Tautan verifikasi dikirim!');
     }
 }

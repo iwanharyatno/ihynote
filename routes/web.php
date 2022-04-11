@@ -28,6 +28,7 @@ Route::post('/register', [RegisterController::class, 'process']);
 Route::get('/email-verification', [EmailVerificationController::class, 'notice'])->middleware('auth')->name('verification.notice');
 Route::get('/email-verification/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware(['auth', 'signed'])->name('verification.verify');
 Route::post('/email-verification', [EmailVerificationController::class, 'resend'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::post('/email-verification/change-email', [EmailVerificationController::class, 'changeEmail'])->middleware('auth');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'process']);
