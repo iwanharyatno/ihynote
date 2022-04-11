@@ -24,6 +24,7 @@ class NotesController extends Controller
         $currentFolder = Folder::find($folder_id);
         $folders = $currentFolder->folders;
         $notes = $currentFolder->notes;
+        $parents = $currentFolder->getParents();
 
         session(['parent_dir' => '/' . $request->path()]);
 
@@ -31,7 +32,8 @@ class NotesController extends Controller
             'user' => $user,
             'currentFolder' => $currentFolder,
             'folders' => $folders,
-            'notes' => $notes
+            'notes' => $notes,
+            'parents' => $parents
         ]);
     }
 

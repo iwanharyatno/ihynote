@@ -46,4 +46,16 @@ class Folder extends Model
 
         $this->delete();
     }
+
+    public function getParents() {
+        $parent = $this->folder;
+
+        if ($parent) {
+            $parents = $parent->getParents();
+            $parents[] = $this;
+            return $parents;
+        } else {
+            return [$this];
+        }
+    }
 }

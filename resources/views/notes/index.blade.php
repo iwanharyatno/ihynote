@@ -5,6 +5,12 @@
 @section('content')
 <div class="container mt-4">
     <h1>{{ $currentFolder->name }}</h1><hr>
+    <p class="text-secondary" style="font-family: Arial, Helvetica, sans-serif;">
+        @foreach ($parents as $folder)
+	        <span>&raquo;</span>
+	        <a href="/notes/{{ $folder->id }}" class="text-secondary" title="{{ $folder->description }}">{{ $folder->name }}</a>
+        @endforeach
+    </p>
     <div class="row">
         @foreach ($folders as $folder)
 	    <div class="col-md-5">
