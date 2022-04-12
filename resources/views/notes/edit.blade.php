@@ -53,7 +53,7 @@
             saveButton.innerHTML = '<span class="spinner-border spinner-border-sm text-white"></span>';
 
             const editor = tinymce.get('note-editor');
-            const data = encodeURI('_token={{ csrf_token() }}&title=' + title.value + '&content=' + editor.getContent());
+            const data = '_token={{ csrf_token() }}&title=' + title.value + '&content=' + encodeURIComponent(editor.getContent());
 
             saveChanges(data, function(report) {
                 if (report.readyState === 4) {
@@ -65,6 +65,8 @@
 
 	                saveButton.toggleAttribute('disabled');
                     saveButton.textContent = 'Simpan';
+
+                    console.log(report.responseText);
                 }
             });
         };
