@@ -26,6 +26,10 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" id="password" class="form-control" name="password" placeholder="Masukkan password" required>
                 </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" id="remember" class="form-check-input" name="remember" checked>
+                    <label for="remember" class="form-check-label"><small>Buat saya tetap masuk</small></label>
+                </div>
                 <button type="submit" class="btn btn-primary my-2 w-100">Login</button>
                 <p class="form-text mt-2">Belum punya akun? <a href="/register">Daftar!</a></p>
             </form>

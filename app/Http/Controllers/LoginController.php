@@ -17,7 +17,7 @@ class LoginController extends Controller
             'password' => ['required']
         ]);
 
-        if (Auth::attempt($credetials)) {
+        if (Auth::attempt($credetials, !!$request->input('remember'))) {
             $request->session()->regenerate();
 
             return redirect()->intended('/notes');
