@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     public function index() {
+        if (Auth::user()) {
+            return redirect('/notes');
+        }
+
         return view('login');
     }
 
