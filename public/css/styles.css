@@ -1,0 +1,28 @@
+.home-header {
+    padding: 4rem 0;
+    position: relative;
+    background-image: url('/img/notebook.jpg');
+    background-size: cover;
+    color: #FFFFFF;
+    z-index: -2;
+}
+
+.home-header h1 {
+    font-size: 7rem;
+    font-weight: 600;
+}
+
+.home-header p {
+    font-size: 1.25rem;
+}
+
+.home-header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.8) 80%);
+    z-index: -1;
+}

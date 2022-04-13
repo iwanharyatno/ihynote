@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NotesController;
@@ -19,13 +19,8 @@ use App\Http\Controllers\NotesController;
 |
 */
 
-Route::get('/', function () {
-    if (Auth::user()) {
-        return redirect('/notes');
-    }
-    
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/about', [HomeController::class, 'about']);
 
 Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'process']);
