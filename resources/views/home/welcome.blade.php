@@ -9,7 +9,7 @@
         <p>Aplikasi Catatan Online yang mudah digunakan. Tuangkan semua pikiran, ide, atau apapun itu di sini.</p>
     </div>
 </header>
-<div class="container mt-5">
+<div class="container mt-5 px-4">
     <div class="row justify-content-evenly">
         <div class="col-md-8 text-center">
             <h1 class="mb-3" id="about">Apa itu IHY Note?</h1>
