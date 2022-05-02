@@ -7,7 +7,11 @@
     <x-utils.move-node :currentFolder="$currentFolder"/>
 @endif
 <div class="container mt-4">
-    <h1>{{ $currentFolder->name }}</h1><hr>
+    <div class="d-flex justify-content-between align-items-baseline">
+        <h1 class="m-0">{{ $currentFolder->name }}</h1>
+        <span class="text-secondary">{{ $folders->count() + $notes->count() }} item</span>
+    </div>
+    <hr>
     <p class="text-secondary" style="font-family: Arial, Helvetica, sans-serif;">
         @foreach ($parents as $folder)
 	        <span>&raquo;</span>
