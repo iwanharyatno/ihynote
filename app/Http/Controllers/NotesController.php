@@ -106,4 +106,48 @@ class NotesController extends Controller
 
         return "OK";
     }
+
+    public function moveNodeRequest(Request $request, $type, $id) {
+        if (request('canceled')) {
+            $folderID = session('move_node')['source_dir_id'];
+            $request->session()->forget('move_node');
+
+            return redirect('/notes/' . $folderID);
+        } 
+
+        $node = null;
+        $name = null;
+        if ($type == "note") {
+            $node = Note::find($id);
+            $name = $node->title;
+        } else {
+            $node = Folder::find($id);
+            $name = $node->name;
+        }
+
+        session(['move_node' => [
+            'name' => $name,
+            'id' => $id,
+            'type' => $type,
+            'source_dir_id' => request('source_dir_id')
+        ]]);
+
+        return redirect('/notes');
+    }
+
+    public function moveNode(Request $request) {
+        $moveInfo = session('move_node');
+        $node = null;
+        if (session('move_node')['type'] == 'note') {
+            $node = Note::find($moveInfo['id']);
+        } else {
+            $node = Folder::find($moveInfo['id']);
+        }
+
+        $node->folder_id = $request->get('target_id');
+        $node->save();
+
+        $request->session()->forget('move_node');
+        return back();
+    }
 }

@@ -75,7 +75,7 @@
 						<a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						    Buat Baru
 						</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
 							<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#node-modal" data-bs-type="note">Catatan</button></li>
 							<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#node-modal" data-bs-type="folder">Folder</button></li>
 						</ul>
